@@ -3,7 +3,6 @@ import 'package:tareas/data/TaskData.dart';
 import 'package:tareas/main.dart';
 
 class taskInformation extends StatelessWidget {
-
   final TaskData? ud;
 
   const taskInformation({Key? key, this.ud}) : super(key: key);
@@ -16,33 +15,26 @@ class taskInformation extends StatelessWidget {
         backgroundColor: Color.fromARGB(136, 21, 248, 40),
       ),
       body: Center(
-        child: ListView(
-          children: [
-            Text("Task Information", style: TextStyle(color: Colors.black, fontSize: 30, fontStyle: FontStyle.normal),textAlign: TextAlign.center),
-            Text("Title: ${ud?.title}", style: TextStyle(color: Colors.black, fontSize: 20, fontStyle: FontStyle.normal),textAlign: TextAlign.center),
-            Text("Description: ${ud?.description}", style: TextStyle(color: Colors.black, fontSize: 20, fontStyle: FontStyle.normal),textAlign: TextAlign.center),
-            Text("Date: ${ud?.date.toString()}", style: TextStyle(color: Colors.black, fontSize: 20, fontStyle: FontStyle.normal),textAlign: TextAlign.center),
-            Text("Priority: ${ud?.priority}", style: TextStyle(color: Colors.black, fontSize: 20, fontStyle: FontStyle.normal),textAlign: TextAlign.center),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  width: 150,
-                  height: 29,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Color.fromARGB(136, 21, 248, 40))
-                    ),
-                    child: Text("Exit"),
-                    onPressed: () {
-                      showAlert(context);
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ],
+        child: ListView.builder(
+          itemCount: tasks.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text("Title: " + tasks[index].title.toString()),
+              subtitle: Text("Description: " + "${tasks[index].description.toString()} \nExpiredDate:  ${tasks[index].date} \nPriority: ${tasks[index].priority}"),
+            );
+          }
+        )
+      ),
+      floatingActionButton: Center(
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor:
+            MaterialStateProperty.all(Color.fromARGB(136, 21, 248, 40))
+          ),
+          child: Text("Exit"),
+          onPressed: () {
+            showAlert(context);
+          },
         ),
       ),
     );

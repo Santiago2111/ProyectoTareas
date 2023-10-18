@@ -11,6 +11,7 @@ TextEditingController DateController = TextEditingController();
 TextEditingController TitleController = TextEditingController();
 TextEditingController DescriptionController = TextEditingController();
 String dropwdowncurrentvalue = "High";
+List<TaskData> tasks = [];
 
 final _formKey = GlobalKey<FormState>();
 
@@ -65,7 +66,7 @@ class _HomePage extends State<HomePage> {
                 controller: DateController,
                 decoration: InputDecoration(
                   icon: Icon(Icons.calendar_today),
-                  labelText: "Select the date"
+                  labelText: "Select expiration date"
                 ),
                 readOnly: true,
                 onTap: () async {
@@ -181,6 +182,12 @@ Widget registryTask(BuildContext context) {
               builder: (context) => alerta,
             );
           }else{
+            tasks.add(TaskData(
+              title: TitleController.text,
+              description: DescriptionController.text,
+              date: DateTime.parse(DateController.text),
+              priority: dropwdowncurrentvalue
+            ));
             AlertDialog _alerta = AlertDialog(
               title: Text("Task Register"),
               content: Text("The task has been successfully registered"),
@@ -238,10 +245,10 @@ Widget viewTasks(BuildContext context) {
           ],
         ),
         onPressed: () {
-          if (TitleController.text.isEmpty || DescriptionController.text.isEmpty || DateController.text.isEmpty){
+          if (tasks.isEmpty){
             AlertDialog alerta = AlertDialog(
               title: Text("Task Register"),
-              content: Text("Fill out all the fields"),
+              content: Text("Fill out all the fields or the list is empty"),
               actions: [
                 TextButton(
                   child: Text("Ok"),
@@ -262,14 +269,7 @@ Widget viewTasks(BuildContext context) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => taskInformation(
-                  ud: TaskData(
-                    title: TitleController.text,
-                    description: DescriptionController.text,
-                    date: DateTime.parse(DateController.text),
-                    priority: dropwdowncurrentvalue
-                  )
-                )
+                builder: (context) => taskInformation()
               )
             );
           }
