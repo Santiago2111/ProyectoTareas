@@ -248,7 +248,7 @@ Widget viewTasks(BuildContext context) {
           if (tasks.isEmpty){
             AlertDialog alerta = AlertDialog(
               title: Text("Task Register"),
-              content: Text("Fill out all the fields or the list is empty"),
+              content: Text("Empty list"),
               actions: [
                 TextButton(
                   child: Text("Ok"),
