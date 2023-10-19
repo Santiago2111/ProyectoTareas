@@ -33,6 +33,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+
+  
   @override
   void initState() {
     DateController.text = "";
@@ -195,6 +197,9 @@ Widget registryTask(BuildContext context) {
                 TextButton(
                   child: Text("Aceptar"),
                   onPressed: () {
+                    TitleController.text = "";
+                    DescriptionController.text = "";
+                    DateController.text = "";
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/taskInformation', );
                   },

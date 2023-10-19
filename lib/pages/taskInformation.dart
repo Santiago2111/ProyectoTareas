@@ -9,6 +9,16 @@ class taskInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    tasks.sort((a, b) {
+      int prioridadA = orderPriority(a.priority.toString());
+      int prioridadB = orderPriority(b.priority.toString());
+
+      if(prioridadA != prioridadB){
+        return prioridadA.compareTo(prioridadB);
+      }else{
+        return a.date.toString().compareTo(b.date.toString());
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text("Information"),
@@ -21,21 +31,28 @@ class taskInformation extends StatelessWidget {
             return ListTile(
               title: Text("Title: " + tasks[index].title.toString()),
               subtitle: Text("Description: " + "${tasks[index].description.toString()} \nExpiredDate:  ${tasks[index].date} \nPriority: ${tasks[index].priority}"),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: (){
+                  tasks.removeAt(index);
+                  Navigator.popUntil(context, ModalRoute.withName('/'));
+                  TitleController.text = "";
+                  DescriptionController.text = "";
+                  DateController.text = "";
+                },
+              ),
             );
           }
         )
       ),
-      floatingActionButton: Center(
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor:
-            MaterialStateProperty.all(Color.fromARGB(136, 21, 248, 40))
-          ),
-          child: Text("Exit"),
-          onPressed: () {
-            showAlert(context);
-          },
+      floatingActionButton: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Color.fromARGB(136, 21, 248, 40))
         ),
+        child: Text("Exit"),
+        onPressed: () {
+          showAlert(context);
+        },
       ),
     );
   }
@@ -68,5 +85,17 @@ class taskInformation extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+int orderPriority(String priority) {
+  if (priority == 'High') {
+    return 0;
+  } else if (priority == 'Medium') {
+    return 1;
+  } else if (priority == 'Low') {
+    return 2;
+  } else {
+    return 3; 
   }
 }
