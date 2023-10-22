@@ -33,6 +33,7 @@ class taskInformation extends StatelessWidget {
               subtitle: Text("Description: " + "${tasks[index].description.toString()} \nExpiredDate:  ${tasks[index].date} \nPriority: ${tasks[index].priority}"),
               trailing: IconButton(
                 icon: Icon(Icons.delete),
+                color: Color.fromARGB(136, 21, 248, 40),
                 onPressed: (){
                   tasks.removeAt(index);
                   Navigator.popUntil(context, ModalRoute.withName('/'));
